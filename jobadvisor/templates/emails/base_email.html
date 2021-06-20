@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div style="width: 430px; padding-top: 20px">
+    <h1 style="font-family: 'Arial', sans-serif; font-size: 24px; font-weight: bold; color: #222222; margin: 0; padding: 0; margin-bottom: 20px;">
+        {% block title %}
+            Hi, {{ user_name |default:"" }}
+        {% endblock %}
+    </h1>
+    {% block body %}
+
+    {% endblock %}
+    {% block footer %}
+    {% endblock %}
+</div>
+</body>
+</html>

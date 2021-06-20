@@ -1,0 +1,82 @@
+Company:
+  title: Company
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 14
+      readOnly: true
+    owner:
+      type: integer
+      example: 92
+      nullable: true
+    name:
+      type: string
+      example: "Fingers Media"
+    industry:
+      description: "`Industry` for read and `integer` for write"
+      oneOf:
+        - $ref: "industry.yaml#/Industry"
+        - type: integer
+          example: 92
+    workers:
+      description: "List of `User` for read and list of `integer` for write"
+      oneOf:
+        - type: array
+          items:
+            type: User
+            $ref: "user.yaml#/User"
+        - type: array
+          items:
+            type: integer
+          example: [5, 32]
+    logo:
+      type: string
+      format: binary
+      nullable: true
+      example: null
+    website:
+      type: string
+      nullable: true
+      example: null
+    size:
+      type: integer
+      example: 30
+      nullable: true
+    founded:
+      type: string
+      format: date
+      example: "2009-12-30"
+      nullable: true
+    description:
+      type: string
+      example: "The best company"
+      nullable: true
+    is_validated:
+      type: boolean
+      example: true
+      readOnly: true
+    is_banned:
+      type: boolean
+      example: true
+      readOnly: true
+    is_best:
+      type: boolean
+      example: true
+      readOnly: true
+    poll_results:
+      type: array
+      readOnly: true
+      items:
+        $ref: 'poll_result.yaml#/PollResult'
+    rating:
+      type: object
+      readOnly: true
+      $ref: 'rating.yaml#/Rating'
+    subscription:
+      type: object
+      desciption: 'If current user is an worker of the company.'
+      $ref: 'subscription.yaml#/Subscription'
+  required:
+    - name
+    - industry

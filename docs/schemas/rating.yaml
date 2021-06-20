@@ -1,0 +1,15 @@
+Rating:
+  title: Rating
+  type: object
+  properties:
+    rating:
+      type: float
+      example: 45.5
+      readOnly: true
+    count:
+      type: integer
+      example: 8
+      readOnly: true
+  required:
+    - rating
+    - count

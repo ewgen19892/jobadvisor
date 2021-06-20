@@ -1,0 +1,64 @@
+NoContent:
+  description: The resource was deleted successfully.
+Unauthorized:
+  description: Unauthorized
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          detail:
+            type: string
+            example: Authentication credentials were not provided.
+        required:
+          - detail
+Forbidden:
+  description: Forbidden
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          detail:
+            type: string
+            example: You do not have permission to perform this action.
+        required:
+          - detail
+NotFound:
+  description: Not Found
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          detail:
+            type: string
+            example: <ResourceName> <ID> not found.
+        required:
+          - detail
+Conflict:
+  description: Conflict
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          detail:
+            type: string
+            example: Conflict description.
+        required:
+          - detail
+BadRequest:
+  description: Bad request
+  content:
+    application/json:
+      schema:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: string
+            example: No file was submitted.
+        example:
+          image:
+            - "No file was submitted."

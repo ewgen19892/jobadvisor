@@ -1,0 +1,12 @@
+[
+  {"model": "polls.question", "pk": 1, "fields": {"text": "Mon entreprise m’aide à favoriser l’équilibre entre vie professionnelle et vie personnelle", "category": 2}},
+  {"model": "polls.question", "pk": 2, "fields": {"text": "Mes objectifs sont définis et les moyens nécessaires sont mis en place (process, outils, formations, …)", "category": 1}},
+  {"model": "polls.question", "pk": 3, "fields": {"text": "J’interviens sur des sujets variés et d'une forte valeur ajoutée", "category": 1}},
+  {"model": "polls.question", "pk": 4, "fields": {"text": "Je trouve que ma charge de travail est", "category": 2}},
+  {"model": "polls.question", "pk": 5, "fields": {"text": "Je connais mon périmètre de travail et comprend l’organisation de mon entreprise", "category": 2}},
+  {"model": "polls.question", "pk": 6, "fields": {"text": "J’estime que le management", "category": 3}},
+  {"model": "polls.question", "pk": 7, "fields": {"text": "Je suis en bon terme avec ma hiérarchie", "category": 3}},
+  {"model": "polls.question", "pk": 8, "fields": {"text": "Je considère la relation avec mes collègues", "category": 4}},
+  {"model": "polls.question", "pk": 9, "fields": {"text": "Je sens que l'on me fait confiance et responsabilise", "category": 4}},
+  {"model": "polls.question", "pk": 10, "fields": {"text": "Je connais bien la culture de mon entreprise et les valeurs partagées", "category": 4}}
+]

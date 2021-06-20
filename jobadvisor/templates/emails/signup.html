@@ -1,0 +1,11 @@
+{% extends "emails/base_email.html" %}
+{% block title %}
+    Welcome
+{% endblock %}
+{% block body %}
+    <p style="font-family: 'Arial', sans-serif;font-style: normal;font-weight: normal;font-size: 18px;color: #222222;margin:0;padding: 0;margin-bottom: 24px;">
+        We sent a link to your email to confirm your account.
+        You have to follow <a href="{{ SITE_URL }}/activate/?uid={{ uid }}&token={{ token }}&level={{ level }}">the link</a> in the letter in your mail to
+        access to your JobAdvisor profile.
+    </p>
+{% endblock %}

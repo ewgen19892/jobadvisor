@@ -1,0 +1,31 @@
+Advantage:
+  title: Advantage
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    name:
+      type: string
+      example: "Some text"
+    file:
+      type: string
+      format: binnary
+      example: "https://ja.com/media/advantage/3/effectiveness.jpg"
+    level:
+      type: integer
+      description: >
+        Level descriptions:
+         * `0` - Trainee
+         * `1` - Employee
+         * `2` - Employer
+      enum:
+        - 0
+        - 1
+        - 2
+  required:
+    - id
+    - name
+    - file
+    - level

@@ -1,0 +1,80 @@
+Vacancy:
+  title: Vacancy
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 14
+      readOnly: true
+    company:
+      description: "`Company` for read and `integer` for write"
+      oneOf:
+        - $ref: "company.yaml#/Company"
+        - type: integer
+          example: 92
+    position:
+      description: "`Position` for read and `integer` for write"
+      oneOf:
+        - $ref: "position.yaml#/Position"
+        - type: integer
+          example: 92
+    description:
+      type: string
+      example: "The best company"
+    salary:
+      type: integer
+      example: 1500
+    experience:
+      type: float
+      example: 2.5
+    location:
+      type: string
+      example: "Minsk, Lahojski trakt 22a"
+    level:
+      type: integer
+      description: >
+        Level descriptions:
+         * `0` - Trainee
+         * `1` - Employee
+         * `2` - Employer
+      enum:
+        - 0
+        - 1
+        - 2
+    founded:
+      type: string
+      format: date
+      example: "2009-12-30"
+    receptive:
+      type: array
+      items:
+        type: integer
+      example: [78, 432, 451]
+      readOnly: true
+    created_at:
+      type: string
+      format: datetime
+      example: "2019-04-25T10:34:19.614084Z"
+      readOnly: true
+    deleted_at:
+      type: string
+      format: datetime
+      example: "2019-04-25T10:34:19.614084Z"
+      nullable: true
+      readOnly: true
+    responses_count:
+      type: integer
+      minimum: 0
+      readOnly: true
+    is_top:
+      type: boolean
+      example: true
+    is_hiring:
+      type: boolean
+      example: true
+    is_responded:
+      type: boolean
+      example: true
+  required:
+    - name
+    - industry

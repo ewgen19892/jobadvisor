@@ -1,0 +1,55 @@
+Resume:
+  title: Resume
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 842
+      readOnly: true
+    file:
+      type: string
+      format: binnary
+      nullable: true
+      example: null
+    experience:
+      type: float
+      example: 25.89
+    certificates:
+      type: string
+      nullable: true
+      example: null
+    description:
+      type: string
+      nullable: true
+      example: null
+    salary:
+      type: integer
+      example: 5000
+      minimum: 1
+    owner:
+      description: "`User` for read and `integer` for write"
+      oneOf:
+        - $ref: "user.yaml#/User"
+        - type: integer
+          example: 92
+    position:
+      description: "`Position` for read and `integer` for write"
+      oneOf:
+        - $ref: "position.yaml#/Position"
+        - type: integer
+          example: 92
+    skills:
+      description: "List of `Skill` for read and list of `integer` for write"
+      oneOf:
+        - type: array
+          items:
+            type: Skill
+            $ref: "skill.yaml#/Skill"
+        - type: array
+          items:
+            type: integer
+          example: [5, 32]
+  required:
+    - graduated
+    - speciality
+    - institute

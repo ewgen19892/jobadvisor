@@ -1,0 +1,93 @@
+Interview:
+  title: Interview
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    company:
+      description: "`Company` for read and `integer` for write"
+      oneOf:
+        - $ref: "company.yaml#/Company"
+        - type: integer
+          example: 92
+    owner:
+      type: object
+      readOnly: true
+      allOf:
+        - $ref: "user.yaml#/User"
+    position:
+      type: integer
+      example: 234
+    title:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+      maxLength: 120
+    description:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+    experience:
+      type: integer
+      enum:
+        - 0
+        - 1
+        - 2
+    complication:
+      type: integer
+      minimum: 0
+      example: 8
+    has_offer:
+      type: boolean
+      example: false
+    duration:
+      type: integer
+      minimum: 0
+      example: 30
+    date:
+      type: string
+      format: date
+      example: "1995-03-30"
+    place:
+      type: staring
+      example: Lahojski trakt 22a/2 707
+    is_anonymous:
+      type: boolean
+      example: false
+    is_top:
+      type: boolean
+      example: false
+      readOnly: true
+    created_at:
+      type: string
+      format: datetime
+      example: "2019-04-25T10:34:19.614084Z"
+      readOnly: true
+    is_helpful:
+      type: object
+      properties:
+        to_me:
+          type: boolean
+          example: true
+        count:
+          type: integer
+          example: 59
+      readOnly: true
+    comments:
+      type: array
+      readOnly: true
+      items:
+        $ref: 'comment.yaml#/Comment'
+    qas:
+      type: array
+      readOnly: true
+      items:
+        $ref: 'qa.yaml#/QA'
+
+  required:
+    - company
+    - position
+    - title
+    - description
+    - complication
+    - experience

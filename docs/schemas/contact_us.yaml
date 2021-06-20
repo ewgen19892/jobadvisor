@@ -1,0 +1,24 @@
+ContactUs:
+  title: Contact us form
+  type: object
+  properties:
+    name:
+      type: string
+      example: "Some text"
+      maxLength: 255
+    phone:
+      type: string
+      example: "375291881489"
+      maxLength: 16
+    email:
+      type: string
+      format: email
+      example: "admin@mail.com"
+    message:
+      type: string
+      example: "Lorem ipsum"
+  required:
+    - name
+    - phone
+    - email
+    - message

@@ -1,0 +1,196 @@
+{% load i18n static %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}"
+      {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="stylesheet" type="text/css"
+          href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+    {% block extrastyle %}{% endblock %}
+    {% if LANGUAGE_BIDI %}
+        <link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+    {% block extrahead %}{% endblock %}
+    {% block responsive %}
+        <meta name="viewport"
+              content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css"
+              href="{% static "admin/css/responsive.css" %}">
+        {% if LANGUAGE_BIDI %}
+            <link rel="stylesheet" type="text/css"
+                  href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+    {% endblock %}
+    {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+{% load i18n %}
+
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+      data-admin-utc-offset="{% now "Z" %}">
+
+<!-- Container -->
+<div id="container">
+
+    {% if not is_popup %}
+        <!-- Header -->
+        <div id="header">
+            <div id="branding">
+                {% block branding %}{% endblock %}
+            </div>
+            {% block usertools %}
+                {% if has_permission %}
+                    <div id="user-tools">
+                        {% block welcome-msg %}
+                            {% trans 'Welcome,' %}
+                            <strong>{% firstof user.get_short_name user.get_username %}</strong>
+                            .
+                        {% endblock %}
+                        {% block userlinks %}
+                            {% if site_url %}
+                                <a href="{{ site_url }}">{% trans 'View site' %}</a> /
+                            {% endif %}
+                            {% if user.is_active and user.is_staff %}
+                                {% url 'django-admindocs-docroot' as docsroot %}
+                                {% if docsroot %}
+                                    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a>
+                                    /
+                                {% endif %}
+                            {% endif %}
+                            {% if user.has_usable_password %}
+                                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
+                                /
+                            {% endif %}
+                            <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+                        {% endblock %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+            {% block nav-global %}{% endblock %}
+        </div>
+        <!-- END Header -->
+        {% block breadcrumbs %}
+            <div class="breadcrumbs">
+                <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+                {% if title %} &rsaquo; {{ title }}{% endif %}
+            </div>
+        {% endblock %}
+    {% endif %}
+
+    {% block messages %}
+        <ul class="messagelist" id="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                    {{ message|capfirst }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endblock messages %}
+
+    <!-- Content -->
+    <div id="content" class="{% block coltype %}colM{% endblock %}">
+        {% block pretitle %}{% endblock %}
+        {% block content_title %}{% if title %}<h1>{{ title }}</h1>
+        {% endif %}{% endblock %}
+        {% block content %}
+            {% block object-tools %}{% endblock %}
+            {{ content }}
+        {% endblock %}
+        {% block sidebar %}{% endblock %}
+        <br class="clear">
+    </div>
+    <!-- END Content -->
+
+    {% block footer %}
+        <div id="footer"></div>{% endblock %}
+</div>
+<!-- END Container -->
+
+<!-- Import and configure the Firebase SDK -->
+<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-app.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-messaging.js"></script>
+<script>
+    const firebaseConfig = {
+        messagingSenderId: "540425893715",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+    navigator.serviceWorker.register('/static/firebase-messaging-sw.js')
+        .then((registration) => {
+            messaging.useServiceWorker(registration);
+            Notification.requestPermission().then((permission) => {
+                if (permission === 'granted') {
+                    console.log('Notification permission granted.');
+                    messaging.getToken().then((currentToken) => {
+                        if (currentToken) {
+                            sendTokenToServer(currentToken);
+                        } else {
+                            console.log('No Instance ID token available. Request permission to generate one.');
+                            setTokenSentToServer(false);
+                        }
+                    }).catch((err) => {
+                        console.log('An error occurred while retrieving token. ', err);
+                        setTokenSentToServer(false);
+                    });
+                } else {
+                    console.log('Unable to get permission to notify.');
+                }
+            });
+        });
+    messaging.usePublicVapidKey('BFXEJlFZQkSZMki_wOEd3RqoUVdQgjut_WhC_119uzPwlrV2LUN7eQbJ-ePpznc9FIFqHKIhq321I12maIDIoe0');
+
+    messaging.onMessage((payload) => {
+        const messagesElement = document.querySelector('#messages');
+        const message = document.createElement('li');
+        message.className = payload["data"]["level"];
+        message.textContent = payload["data"]["text"];
+        messagesElement.appendChild(message);
+    });
+
+    function sendTokenToServer(currentToken) {
+        if (!isTokenSentToServer()) {
+            console.log('Sending token to server...');
+            const url = "/devices/";
+            const data = {
+                "registration_id": currentToken,
+                "type": "web"
+            };
+            const payload = {
+                headers: {
+                    "content-type": "application/json; charset=UTF-8",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                method: "POST",
+                body: JSON.stringify(data)
+            };
+            fetch(url, payload)
+                .then(data => {
+                    return data.json()
+                })
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(error => console.log(error));
+            setTokenSentToServer(true);
+        } else {
+            console.log('Token already sent to server so won\'t send it again ' +
+                'unless it changes');
+        }
+    }
+
+    function isTokenSentToServer() {
+        return window.localStorage.getItem('sentToServer') === '1';
+    }
+
+    function setTokenSentToServer(sent) {
+        window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+    }
+</script>
+</body>
+</html>

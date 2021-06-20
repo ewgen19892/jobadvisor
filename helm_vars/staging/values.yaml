@@ -1,0 +1,17 @@
+environment: "staging"
+siteUrl: https://jobadvisor.staging.by
+debug: "false"
+allowedHosts:
+  - "*"
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/acme-challenge-type: http01
+  hosts:
+    - host: api.jobadvisor.staging.by
+      paths: [/]
+  tls:
+    - secretName: staging-api-jobadvisor-tls
+      hosts:
+        - api.jobadvisor.staging.by

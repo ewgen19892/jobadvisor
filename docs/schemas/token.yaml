@@ -1,0 +1,55 @@
+ObtainPairToken:
+  title: Obtain pair token
+  type: object
+  properties:
+    email:
+      type: string
+      format: email
+      example: "volodia@mail.com"
+    password:
+      type: string
+      example: "samyj_umnyj"
+  required:
+    - email
+    - password
+
+RefreshPairToken:
+  title: Obtain pair token
+  type: object
+  properties:
+    refresh:
+      type: string
+      example: "eyJ0eXAiOiJKV1QiLCJhbGci...sImV4cCI6MTU"
+  required:
+    - refresh
+
+PairToken:
+  title: Pair token
+  type: object
+  properties:
+    access:
+      type: string
+      example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIU...cmVmcmVzaCIsImV4cCI6MTU"
+    refresh:
+      type: string
+      example: "eyJ0eXAiOiJKV1QiLCJhbGciOi...IjoiYWNjZXNzIiwiZXhwIjoxNTU1"
+  required:
+    - access
+    - refresh
+
+oAuthToken:
+  title: Pair token
+  type: object
+  properties:
+    token:
+      type: string
+      description: "Access token from Facebook or ID token from Google"
+      example: "eyJ0eXAiOiJKV1QiLCJhbGciO...tlbl90eXIjoicmVmcmVzaCIsImV4cCI6MTU"
+    backend:
+      type: string
+      enum:
+        - "google"
+        - "facebook"
+  required:
+    - token
+    - backend

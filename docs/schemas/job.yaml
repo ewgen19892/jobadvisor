@@ -1,0 +1,42 @@
+Job:
+  title: Job
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    owner:
+      description: "`User` for read and `integer` for write"
+      oneOf:
+        - type: object
+
+          $ref: "user.yaml#/User"
+        - type: integer
+
+          example: 659
+    company:
+      description: "`Company` for read and `integer` for write"
+      oneOf:
+        - type: object
+          $ref: "company.yaml#/Company"
+        - type: integer
+          example: 5
+    position:
+      description: "`Position` for read and `integer` for write"
+      oneOf:
+        - $ref: "position.yaml#/Position"
+        - type: integer
+          example: 72
+    salary:
+      type: integer
+      example: 45
+    started_at:
+      type: string
+      format: date
+    finished_at:
+      type: string
+      format: date
+      nullable: true
+  required:
+    - company

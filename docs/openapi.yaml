@@ -1,0 +1,2752 @@
+openapi: 3.0.0
+info:
+  version: "1.0.3"
+  title: JobAdvisor
+  description: RESTful documentation
+  contact: {}
+
+servers:
+  - url: "https://api.jobadvisor.staging.by"
+    description: Staging (Testing)
+
+security:
+  - Bearer: []
+
+tags:
+  - name: Auth
+  - name: Registration
+  - name: Restore access
+  - name: Users
+  - name: Notifications
+  - name: Skills
+  - name: Institutes
+  - name: Resumes
+  - name: Educations
+  - name: Jobs
+  - name: Salaries
+  - name: Positions
+  - name: Vacancies
+  - name: Companies
+  - name: Industries
+  - name: Categories
+  - name: Reviews
+  - name: Interviews
+  - name: Q&A
+  - name: Variants
+  - name: Questions
+  - name: Answers
+  - name: Landing
+
+
+paths:
+  /auth/token/:
+    post:
+      summary: "Get token"
+      description: "TODO: Add Description"
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/token.yaml#/ObtainPairToken"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/token.yaml#/PairToken"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+      security: []
+  /auth/convert/:
+    post:
+      summary: "Convert oAuth token"
+      description: "TODO: Add Description"
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/token.yaml#/oAuthToken"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/token.yaml#/PairToken"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+      security: []
+  /auth/refresh/:
+    post:
+      summary: "Refresh token"
+      description: "TODO: Add Description"
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/token.yaml#/RefreshPairToken"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/token.yaml#/PairToken"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+      security: []
+
+  /registration/:
+    post:
+      summary: "Register user"
+      description: "TODO: Add Description"
+      tags:
+        - Registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/user.yaml#/User"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/user.yaml#/User"
+        required: false
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/user.yaml#/User"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+      security: []
+  /invite/:
+    post:
+      summary: "Invite user"
+      description: "TODO: Add Description"
+      tags:
+        - Registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/invite.yaml#/Invite"
+        required: false
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/invite.yaml#/Invite"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+  /activation/{uid}/{token}/:
+    get:
+      summary: "Activate user"
+      description: "TODO: Add Description"
+      tags:
+        - Registration
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: "User UID"
+          schema:
+            type: string
+            example: MkDw
+        - name: token
+          in: path
+          required: true
+          description: "User token"
+          schema:
+            type: string
+            example: "55kl-a65b3b74db7812fefe36"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/user.yaml#/User"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+      security: []
+
+  /restore/:
+    get:
+      summary: "Request restore user access"
+      description: "TODO: Add Description"
+      tags:
+        - Restore access
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: "User email"
+          schema:
+            type: string
+            format: email
+            example: petr@first.com
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/user.yaml#/User"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+      security: []
+  /restore/{uid}/{token}/:
+    patch:
+      summary: "Confirm restore user access"
+      description: "TODO: Add Description"
+      tags:
+        - Restore access
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: "User UID"
+          schema:
+            type: string
+            example: MkDw
+        - name: token
+          in: path
+          required: true
+          description: "User token"
+          schema:
+            type: string
+            example: "55kl-a65b3b74db7812fefe36"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/user.yaml#/User"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/user.yaml#/User"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/user.yaml#/User"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+      security: []
+
+  /users/:
+    get:
+      summary: "Get user list"
+      description: "TODO: Add Description"
+      tags:
+        - Users
+      parameters:
+        - name: search
+          in: query
+          description: Search by email, first and last name
+          schema:
+            type: string
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/user.yaml#/User"
+  /users/{pk}/:
+    get:
+      summary: "Get user details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "User ID or `me`"
+          schema:
+            type: integer
+            example: 584
+      tags:
+        - Users
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/user.yaml#/User"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial user update"
+      description: "TODO: Add Description"
+      tags:
+        - Users
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "User ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/user.yaml#/User"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/user.yaml#/User"
+        required: false
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/user.yaml#/User"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete user"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "User ID"
+          schema:
+            type: integer
+            example: 584
+      tags:
+        - Users
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /devices/:
+    post:
+      summary: "Add FCM token to user"
+      description: "TODO: Add Description"
+      tags:
+        - Notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/device.yaml#/Device"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/device.yaml#/Device"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /messages/:
+    get:
+      summary: "Get users messages"
+      description: "TODO: Add Description"
+      tags:
+        - Notifications
+      parameters:
+        - name: is_read
+          in: query
+          description: Filter by `is_read`
+          schema:
+            type: boolean
+            example: false
+        - name: ordering
+          in: query
+          description: >
+            Order queryset. Сomma separated string:
+             * `created_at` or `-created_at`
+             * `level` or `-level`
+             * `is_read` or `-is_read`
+          schema:
+            type: string
+            example: "level,-created_at"
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'schemas/message.yaml#/Message'
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /messages/{pk}/:
+    get:
+      summary: "Read message"
+      description: "TODO: Add Description"
+      tags:
+        - Notifications
+      parameters:
+        - name: pk
+          in: path
+          description: Message ID
+          required: true
+          schema:
+            type: integer
+            example: 23
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/message.yaml#/Message"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /skills/:
+    get:
+      summary: Get skill list
+      description: 'TODO: Add Description'
+      tags:
+        - Skills
+      parameters:
+        - name: search
+          in: query
+          description: Search by skills
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'schemas/skill.yaml#/Skill'
+    post:
+      summary: Create skill
+      description: 'TODO: Add Description'
+      tags:
+        - Skills
+      requestBody:
+        $ref: 'schemas/skill.yaml#/Skill'
+      responses:
+        201:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas/skill.yaml#/Skill'
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+
+  /institutes/:
+    get:
+      summary: Get institute list
+      description: 'TODO: Add Description'
+      tags:
+        - Institutes
+      parameters:
+        - name: search
+          in: query
+          description: Search by institutes
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'schemas/institute.yaml#/Institute'
+    post:
+      summary: Create institute
+      description: 'TODO: Add Description'
+      tags:
+        - Institutes
+      requestBody:
+        $ref: 'schemas/institute.yaml#/Institute'
+      responses:
+        201:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas/institute.yaml#/Institute'
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+
+  /resumes/:
+    get:
+      summary: Get resume list
+      description: 'TODO: Add Description'
+      tags:
+        - Resumes
+      parameters:
+        - name: owner
+          in: query
+          description: Filter by owner
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/resume.yaml#/Resume"
+
+    post:
+      summary: "Create resume"
+      description: "TODO: Add Description"
+      tags:
+        - Resumes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/resume.yaml#/Resume"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/resume.yaml#/Resume"
+        required: false
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/resume.yaml#/Resume"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /resumes/{pk}/:
+    get:
+      summary: "Get resume details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Resume ID"
+          schema:
+            type: integer
+            example: 412
+      tags:
+        - Resumes
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/resume.yaml#/Resume"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial resume update"
+      description: "TODO: Add Description"
+      tags:
+        - Resumes
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Resume ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/resume.yaml#/Resume"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/resume.yaml#/Resume"
+        required: false
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/resume.yaml#/Resume"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete resume"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Resume ID"
+          schema:
+            type: integer
+            example: 41
+      tags:
+        - Resumes
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+  /educations/:
+    get:
+      summary: Get education list
+      description: 'TODO: Add Description'
+      tags:
+        - Educations
+      parameters:
+        - name: owner
+          in: query
+          description: Filter by owner
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/education.yaml#/Education"
+    post:
+      summary: "Create education"
+      description: "TODO: Add Description"
+      tags:
+        - Educations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/education.yaml#/Education"
+        required: false
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/education.yaml#/Education"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /educations/{pk}/:
+    get:
+      summary: "Get education details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Education ID"
+          schema:
+            type: integer
+            example: 48
+      tags:
+        - Educations
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/education.yaml#/Education"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial resume update"
+      description: "TODO: Add Description"
+      tags:
+        - Educations
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Education ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/education.yaml#/Education"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/education.yaml#/Education"
+        required: false
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/education.yaml#/Education"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete education"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Education ID"
+          schema:
+            type: integer
+            example: 78
+      tags:
+        - Educations
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+  /jobs/:
+    get:
+      summary: Get job list
+      description: 'TODO: Add Description'
+      tags:
+        - Jobs
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/job.yaml#/Job"
+    post:
+      summary: "Create job"
+      description: "TODO: Add Description"
+      tags:
+        - Jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/job.yaml#/Job"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/job.yaml#/Job"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /jobs/{pk}/:
+    get:
+      summary: "Get job details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Job ID"
+          schema:
+            type: integer
+            example: 742
+      tags:
+        - Jobs
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/job.yaml#/Job"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial job update"
+      description: "TODO: Add Description"
+      tags:
+        - Jobs
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Job ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/job.yaml#/Job"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/job.yaml#/Job"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete job"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Job ID"
+          schema:
+            type: integer
+            example: 85
+      tags:
+        - Jobs
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+  /salaries/:
+    get:
+      summary: Get list of salary
+      description: 'TODO: Add Description'
+      tags:
+        - Salaries
+      parameters:
+        - name: search
+          in: query
+          description: Search by position name
+          schema:
+            type: string
+            example: "Python"
+        - name: company
+          in: query
+          description: Company ID
+          schema:
+            type: integer
+            example: 2
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/salary.yaml#/Salary"
+
+  /categories/:
+    get:
+      summary: Get category list
+      description: 'TODO: Add description'
+      tags:
+        - Categories
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/category.yaml#/Category"
+
+  /categories/{pk}/:
+    get:
+      summary: "Get category details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Category ID"
+          schema:
+            type: integer
+            example: 48
+      tags:
+        - Categories
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/category.yaml#/Category"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+
+  /variants/:
+    get:
+      summary: Get variant list
+      description: 'TODO: Add description'
+      tags:
+        - Variants
+      parameters:
+        - name: question
+          in: query
+          description: Filter by question
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/variant.yaml#/Variant"
+
+  /variants/{pk}/:
+    get:
+      summary: "Get variant details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Variant ID"
+          schema:
+            type: integer
+            example: 48
+      tags:
+        - Variants
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/variant.yaml#/Variant"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+
+  /questions/:
+    get:
+      summary: Get question list
+      description: 'TODO: Add description'
+      tags:
+        - Questions
+      parameters:
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/question.yaml#/Question"
+
+  /questions/{pk}/:
+    get:
+      summary: "Get question details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Question ID"
+          schema:
+            type: integer
+            example: 48
+      tags:
+        - Questions
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/question.yaml#/Question"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+
+  /answers/:
+    get:
+      summary: Get answer list
+      description: 'TODO: Add Description'
+      tags:
+        - Answers
+      parameters:
+        - name: my
+          in: query
+          description: Filter by owner
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+        - name: company
+          in: query
+          description: Filter by company
+          schema:
+            type: string
+        - name: question
+          in: query
+          description: Filter by question
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/answer.yaml#/Answer"
+    post:
+      summary: "Create answer"
+      description: "TODO: Add Description"
+      tags:
+        - Answers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/answer.yaml#/Answer"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/answer.yaml#/Answer"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /answers/{pk}/:
+    get:
+      summary: "Get answer details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Answer ID"
+          schema:
+            type: integer
+            example: 412
+      tags:
+        - Answers
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/answer.yaml#/Answer"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial answer update"
+      description: "TODO: Add Description"
+      tags:
+        - Answers
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Answer ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/answer.yaml#/Answer"
+        required: false
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/answer.yaml#/Answer"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete answer"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Answer ID"
+          schema:
+            type: integer
+            example: 41
+      tags:
+        - Answers
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+  /industries/:
+    get:
+      summary: Get industry list
+      description: 'TODO: Add Description'
+      tags:
+        - Industries
+      parameters:
+        - name: search
+          in: query
+          description: Search by name
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'schemas/industry.yaml#/Industry'
+
+  /positions/:
+    get:
+      summary: Get position list
+      description: 'TODO: Add Description'
+      tags:
+        - Positions
+      parameters:
+        - name: search
+          in: query
+          description: Search by name
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'schemas/position.yaml#/Position'
+    post:
+      summary: Create position
+      description: 'TODO: Add Description'
+      tags:
+        - Positions
+      requestBody:
+        $ref: 'schemas/position.yaml#/Position'
+      responses:
+        201:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: 'schemas/position.yaml#/Position'
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+
+  /companies/:
+    get:
+      summary: "Get company list"
+      description: 'TODO: Add Description'
+      tags:
+        - Companies
+      parameters:
+        - name: owner
+          in: query
+          description: "Filter by owner ID"
+          schema:
+            type: integer
+            example: 1
+        - name: search
+          in: query
+          description: "Search by `name` and `description` fields"
+          schema:
+            type: string
+            example: "fingers"
+        - name: ordering
+          in: query
+          description: >
+            Order queryset. Сomma separated string:
+             * `rate` or `-rate`
+          schema:
+            type: string
+            example: "-rate"
+        - name: is_following
+          in: query
+          description: "Filter by following"
+          schema:
+            type: integer
+            example: 1
+        - name: is_best
+          in: query
+          description: "Filter by is best company"
+          schema:
+            type: integer
+            example: 1
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/company.yaml#/Company"
+
+    post:
+      summary: "Create company"
+      description: "TODO: Add Description"
+      tags:
+        - Companies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/company.yaml#/Company"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/company.yaml#/Company"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/company.yaml#/Company"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /companies/{pk}/:
+    get:
+      summary: "Get company details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Company ID"
+          schema:
+            type: integer
+            example: 742
+      tags:
+        - Companies
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/company.yaml#/Company"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial company update"
+      description: "TODO: Add Description"
+      tags:
+        - Companies
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Company ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/company.yaml#/Company"
+          multipart/form-data:
+            schema:
+              $ref: "schemas/company.yaml#/Company"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/company.yaml#/Company"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete company"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Company ID"
+          schema:
+            type: integer
+            example: 85
+      tags:
+        - Companies
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /companies/{pk}/follow/:
+    get:
+      summary: "Get company followers"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Company ID"
+          schema:
+            type: integer
+            example: 742
+      tags:
+        - Companies
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/follow.yaml#/Follow"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    post:
+      summary: "Add company to favorite"
+      description: "TODO: Add Description"
+      tags:
+        - Companies
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Company ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/follow.yaml#/Follow"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/follow.yaml#/Follow"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Remove company from favorites"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Company ID"
+          schema:
+            type: integer
+            example: 85
+      tags:
+        - Companies
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+
+
+  /vacancies/:
+    get:
+      summary: "Get vacancy list"
+      description: 'TODO: Add Description'
+      tags:
+        - Vacancies
+      parameters:
+        - name: is_responded
+          in: query
+          description: "Get vacancies for which I responded"
+          schema:
+            type: boolean
+            example: true
+        - name: company
+          in: query
+          description: "Filter by company ID"
+          schema:
+            type: integer
+            example: 59
+        - name: location
+          in: query
+          description: "Filter by location"
+          schema:
+            type: string
+            example: "Minsk"
+        - name: position
+          in: query
+          description: "Filter by position ID"
+          schema:
+            type: integer
+            example: 99
+        - name: salary_gte
+          in: query
+          description: "Filter by salary: greater than or equal"
+          schema:
+            type: integer
+            example: 599
+        - name: salary_lte
+          in: query
+          description: "Filter by salary: less than or equal"
+          schema:
+            type: integer
+            example: 899
+        - name: experience_gte
+          in: query
+          description: "Filter by experience: greater than or equal"
+          schema:
+            type: integer
+            example: 599
+        - name: experience_lte
+          in: query
+          description: "Filter by experience: less than or equal"
+          schema:
+            type: integer
+            example: 899
+        - name: is_hiring
+          in: query
+          description: Filter by `is_hiring` parameters. Used for the main page
+          schema:
+            type: boolean
+            example: true
+        - name: is_deleted
+          in: query
+          description: Exlude deleted vacancies from list
+          schema:
+            type: boolean
+            example: true
+        - name: search
+          in: query
+          description: Search by title, description, company and position
+          schema:
+            type: string
+        - name: ordering
+          in: query
+          description: >
+            Order queryset. Сomma separated string:
+             * `created_at` or `-created_at`
+             * `salary` or `-salary`
+             * `experience` or `-experience`
+          schema:
+            type: string
+            example: "salary,-created_at"
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/vacancy.yaml#/Vacancy"
+    post:
+      summary: "Create vacancy"
+      description: "TODO: Add Description"
+      tags:
+        - Vacancies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/vacancy.yaml#/Vacancy"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/vacancy.yaml#/Vacancy"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /vacancies/{pk}/:
+    get:
+      summary: "Get vacancy details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Vacancy ID"
+          schema:
+            type: integer
+            example: 742
+      tags:
+        - Vacancies
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/vacancy.yaml#/Vacancy"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial vacancy update"
+      description: "TODO: Add Description"
+      tags:
+        - Vacancies
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Vacancy ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/vacancy.yaml#/Vacancy"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/vacancy.yaml#/Vacancy"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete vacancy"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Vacancy ID"
+          schema:
+            type: integer
+            example: 85
+      tags:
+        - Vacancies
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /vacancies/{pk}/top/:
+    post:
+      summary: "Add to TOP"
+      description: "TODO: Add Description"
+      tags:
+        - Vacancies
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Vacancy ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/vacancy.yaml#/Vacancy"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+    delete:
+      summary: "Remove from TOP"
+      description: "TODO: Add Description"
+      tags:
+        - Vacancies
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Vacancy ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/vacancy.yaml#/Vacancy"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+
+  /vacancies/{pk}/response/:
+    get:
+      summary: "Get users who have responded to the vacancy."
+      description: "TODO: Add Description"
+      tags:
+        - Vacancies
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/user.yaml#/User"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+    post:
+      summary: "Apply for job"
+      description: "TODO: Add Description"
+      tags:
+        - Vacancies
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Vacancy ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/vacancy.yaml#/Vacancy"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+    delete:
+      summary: "Remove the vacancy response"
+      description: "TODO: Add Description"
+      tags:
+        - Vacancies
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Vacancy ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/vacancy.yaml#/Vacancy"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+
+  /reviews/:
+    get:
+      summary: "Get review list"
+      description: 'TODO: Add Description'
+      tags:
+        - Reviews
+      parameters:
+        - name: search
+          in: query
+          description: Search by title, description, company and position
+          schema:
+            type: string
+        - name: company
+          in: query
+          description: Filter by company
+          schema:
+            type: integer
+        - name: is_best
+          in: query
+          description: Filter by `is_best` parameter
+          schema:
+            type: boolean
+            example: true
+        - name: is_mine
+          in: query
+          description: Filter by owner is me.
+          schema:
+            type: boolean
+            example: true
+        - name: ordering
+          in: query
+          description: >
+            Order queryset. Сomma separated string:
+             * `created_at` or `-created_at`
+             * `rate` or `-rate`
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/review.yaml#/Review"
+    post:
+      summary: "Create review"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/review.yaml#/Review"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/review.yaml#/Review"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /reviews/{pk}/:
+    get:
+      summary: "Get review details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 742
+      tags:
+        - Reviews
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/review.yaml#/Review"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial review update"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/review.yaml#/Review"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/review.yaml#/Review"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete review"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 85
+      tags:
+        - Reviews
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /reviews/{pk}/report/:
+    post:
+      summary: "Create report"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 789
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/report.yaml#/Report"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/report.yaml#/Report"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+  /reviews/{pk}/comment/:
+    post:
+      summary: "Create comment"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 789
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/comment.yaml#/Comment"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/comment.yaml#/Comment"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+  /reviews/{pk}/top/:
+    post:
+      summary: "Add to TOP"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/review.yaml#/Review"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+    delete:
+      summary: "Remove from TOP"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/review.yaml#/Review"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+  /reviews/{pk}/helpful/:
+    post:
+      summary: "Set as helpful"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/review.yaml#/Review"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+    delete:
+      summary: "Unset as helpful"
+      description: "TODO: Add Description"
+      tags:
+        - Reviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Review ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/review.yaml#/Review"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+
+  /interviews/:
+    get:
+      summary: "Get interview list"
+      description: 'TODO: Add Description'
+      tags:
+        - Interviews
+      parameters:
+        - name: search
+          in: query
+          description: Search by title, description, company and position
+          schema:
+            type: string
+        - name: company
+          in: query
+          description: Filter by company
+          schema:
+            type: integer
+        - name: has_offer
+          in: query
+          description: Filter by has_offer
+          schema:
+            type: integer
+        - name: is_anonymous
+          in: query
+          description: Filter by is_anonymous
+          schema:
+            type: integer
+        - name: complication
+          in: query
+          description: Filter by complication
+          schema:
+            type: integer
+        - name: experience
+          in: query
+          description: Filter by experience
+          schema:
+            type: integer
+        - name: position
+          in: query
+          description: Filter by position
+          schema:
+            type: integer
+        - name: is_mine
+          in: query
+          description: Filter by owner is me.
+          schema:
+            type: boolean
+            example: true
+        - name: ordering
+          in: query
+          description: >
+            Order queryset. Сomma separated string:
+             * `created_at` or `-created_at`
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/interview.yaml#/Interview"
+    post:
+      summary: "Create interview"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/interview.yaml#/Interview"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/interview.yaml#/Interview"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /interviews/{pk}/:
+    get:
+      summary: "Get interview details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 742
+      tags:
+        - Interviews
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/interview.yaml#/Interview"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial interview update"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/interview.yaml#/Interview"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/interview.yaml#/Interview"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete interview"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 85
+      tags:
+        - Interviews
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /interviews/{pk}/report/:
+    post:
+      summary: "Create report"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 789
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/report.yaml#/Report"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/report.yaml#/Report"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+  /interviews/{pk}/comment/:
+    post:
+      summary: "Create comment"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 789
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/comment.yaml#/Comment"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/comment.yaml#/Comment"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+  /interviews/{pk}/top/:
+    post:
+      summary: "Add to TOP"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/interview.yaml#/Interview"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+    delete:
+      summary: "Remove from TOP"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/interview.yaml#/Interview"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+  /interviews/{pk}/helpful/:
+    post:
+      summary: "Set as helpful"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/interview.yaml#/Interview"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+    delete:
+      summary: "Unset as helpful"
+      description: "TODO: Add Description"
+      tags:
+        - Interviews
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "Interview ID"
+          schema:
+            type: integer
+            example: 789
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/interview.yaml#/Interview"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /qas/:
+    get:
+      summary: "Get Q&A list"
+      description: 'TODO: Add Description'
+      tags:
+        - Q&A
+      parameters:
+        - name: interview
+          in: query
+          description: Filter by interview
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/qa.yaml#/QA"
+    post:
+      summary: "Create Q&A"
+      description: "TODO: Add Description"
+      tags:
+        - Q&A
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/qa.yaml#/QA"
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/qa.yaml#/QA"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+  /qas/{pk}/:
+    get:
+      summary: "Get A&S details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "QA ID"
+          schema:
+            type: integer
+            example: 742
+      tags:
+        - Q&A
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/qa.yaml#/QA"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    patch:
+      summary: "Partial Q&A update"
+      description: "TODO: Add Description"
+      tags:
+        - Q&A
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "QA ID"
+          schema:
+            type: integer
+            example: 584
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/qa.yaml#/QA"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/qa.yaml#/QA"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+    delete:
+      summary: "Delete Q&A"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "QA ID"
+          schema:
+            type: integer
+            example: 85
+      tags:
+        - Q&A
+      responses:
+        204:
+          $ref: "responses/status.yaml#/NoContent"
+        401:
+          $ref: "responses/status.yaml#/Unauthorized"
+        403:
+          $ref: "responses/status.yaml#/Forbidden"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /advantages/:
+    get:
+      summary: Get advantages list
+      description: 'TODO: Add description'
+      tags:
+        - Landing
+      parameters:
+        - name: level
+          in: query
+          description: >
+            Filter by level:
+             * `0` - Trainee
+             * `1` - Employee
+             * `2` - Employer
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/advantage.yaml#/Advantage"
+  /contactus/:
+    post:
+      summary: "Contact us"
+      description: "TODO: Add Description"
+      tags:
+        - Landing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/contact_us.yaml#/ContactUs"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/contact_us.yaml#/ContactUs"
+        400:
+          $ref: "responses/status.yaml#/BadRequest"
+
+  /faq/categories/:
+    get:
+      summary: Get category list for FAQ
+      description: 'TODO: Add description'
+      tags:
+        - Landing
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/category_faq.yaml#/Category"
+
+  /faq/:
+    get:
+      summary: Get FAQ list
+      description: 'TODO: Add description'
+      tags:
+        - Landing
+      parameters:
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+        - name: level
+          in: query
+          description: Filter by level
+          schema:
+            type: integer
+            description: >
+              Level descriptions:
+               * `0` - Trainee
+               * `1` - Employee
+               * `2` - Employer
+            enum:
+              - 0
+              - 1
+              - 2
+        - name: search
+          in: query
+          description: Search by `question` and `answer`
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/faq.yaml#/FAQ"
+  /faq/{pk}/:
+    get:
+      summary: "Get FAQ details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: pk
+          in: path
+          required: true
+          description: "FAQ ID"
+          schema:
+            type: integer
+            example: 48
+      tags:
+        - Landing
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/faq.yaml#/FAQ"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+  /pages/:
+    get:
+      summary: Get pages list
+      description: 'TODO: Add description'
+      tags:
+        - Landing
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/page.yaml#/Page"
+  /pages/{slug}/:
+    get:
+      summary: "Get page details"
+      description: "TODO: Add Description"
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: "Page slug"
+          schema:
+            type: string
+            example: "page_asd"
+      tags:
+        - Landing
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/page.yaml#/Page"
+        404:
+          $ref: "responses/status.yaml#/NotFound"
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,13 @@
+Industry:
+  title: Industry
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 14
+      readOnly: true
+    name:
+      type: string
+      example: "IT"
+  required:
+    - name

@@ -1,0 +1,19 @@
+Follow:
+  title: Follow
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    owner:
+      allOf:
+        - $ref: 'user.yaml#/User'
+      readOnly: true
+    company:
+      type: integer
+      example: 48
+      readOnly: true
+    description:
+      type: string
+      example: "Pokachenu"

@@ -1,0 +1,193 @@
+stages:
+  - build
+  - test
+  - analysis
+  - review
+  - release
+  - deploy
+
+.deploy: &deploy_definition
+  when: manual
+  before_script:
+    - gpg --import $PRIVATE_PGP
+  script:
+    - helm repo update
+    - helm secrets upgrade --install --force jab-${CI_ENVIRONMENT_SLUG} fingers/jobadvisor-backend
+      --namespace jobadvisor
+      --values helm_vars/${HELM_ENV}/values.yaml
+      --values helm_vars/${HELM_ENV}/secrets.yaml
+      --set image.tag="${IMAGE_TAG}"
+      --set ingress.hosts[0].host="${HOSTNAME}"
+      --set ingress.tls[0].hosts[0]="${HOSTNAME}"
+      --set ingress.tls[0].secretName="${HOSTNAME}-tls"
+      --wait
+    - 'curl -H "Content-Type: application/json" -X POST -d "${SLACK_MESSAGE}" "${SLACK_HOOK}"'
+  after_script:
+    - curl -X POST -F token=$QA_TOKEN -F ref=$QA_REF -F "variables[API_URL]=$CI_ENVIRONMENT_URL" https://gitlab.fingers.by/api/v4/projects/149/trigger/pipeline
+  tags:
+    - shell
+
+build:
+  stage: build
+  script:
+    - docker build . -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+  tags:
+    - shell
+
+test:
+  stage: test
+  artifacts:
+    paths:
+      - reports/
+  script:
+    - docker run -d --env-file example.env --name p_$CI_JOB_ID postgres:latest
+    - docker run -d --env-file example.env --name m_$CI_JOB_ID memcached:latest
+    - docker run --env-file example.env --link p_$CI_JOB_ID:postgres --link m_$CI_JOB_ID:memcached -v $(pwd)/reports:/app/reports/ $CI_REGISTRY_IMAGE:$CI_BUILD_REF test
+  after_script:
+    - docker rm -f p_$CI_JOB_ID
+    - docker rm -f m_$CI_JOB_ID
+  tags:
+    - shell
+
+lint:
+  stage: test
+  artifacts:
+    paths:
+      - reports/
+  script:
+    - docker run --env-file example.env -v $(pwd)/reports:/app/reports/ $CI_REGISTRY_IMAGE:$CI_BUILD_REF lint
+  tags:
+    - shell
+
+analysis:
+  stage: analysis
+  script:
+    - sonar-scanner
+  dependencies:
+    - test
+  tags:
+    - shell
+
+app:
+  stage: release
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.fingers.by
+  script:
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  only:
+    - tags
+  tags:
+    - shell
+
+pages:
+  stage: release
+  script:
+    - redoc-cli bundle docs/openapi.yaml -o public/index.html --title "JobAdvisor $CI_COMMIT_REF_NAME"
+    - cp -r reports/* public
+  artifacts:
+    paths:
+      - public
+  only:
+    - tags
+  tags:
+    - shell
+
+review:start:
+  stage: review
+  <<: *deploy_definition
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.fingers.by
+    - gpg --import $PRIVATE_PGP
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+  after_script: []
+  variables:
+    HELM_ENV: dev
+    HOSTNAME: api-${CI_COMMIT_REF_SLUG}.jobadvisor.staging.by
+    IMAGE_TAG: ${CI_BUILD_REF}
+    SLACK_MESSAGE: >-
+      {
+        "text": "Branch `${CI_COMMIT_REF_NAME}` is ready for review on https://api-${CI_COMMIT_REF_SLUG}.jobadvisor.staging.by"
+      }
+    QA_REF: develop
+  environment:
+    name: ${CI_COMMIT_REF_SLUG}
+    url: https://api-${CI_COMMIT_REF_SLUG}.jobadvisor.staging.by/
+  only:
+    - /^feature/*/
+    - /^hotfix/*/
+    - /^bugfix/*/
+
+review:finish:
+  stage: review
+  when: manual
+  script:
+    - helm del --purge jab-${CI_ENVIRONMENT_SLUG}
+  environment:
+    name: ${CI_COMMIT_REF_SLUG}
+    action: stop
+  tags:
+    - shell
+  only:
+    - /^feature/*/
+    - /^hotfix/*/
+    - /^bugfix/*/
+
+deploy:dev:
+  <<: *deploy_definition
+  stage: deploy
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.fingers.by
+    - gpg --import $PRIVATE_PGP
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+  variables:
+    HELM_ENV: dev
+    HOSTNAME: api-dev.jobadvisor.staging.by
+    IMAGE_TAG: ${CI_BUILD_REF}
+    SLACK_MESSAGE: >-
+      {
+        "text": "Dev-version is ready for use from ${CI_ENVIRONMENT_URL}"
+      }
+    QA_REF: develop
+  environment:
+    name: develop
+    url: https://api-dev.jobadvisor.staging.by/
+  only:
+    - develop
+
+deploy:staging:
+  <<: *deploy_definition
+  stage: deploy
+  variables:
+    HELM_ENV: staging
+    HOSTNAME: api.jobadvisor.staging.by
+    IMAGE_TAG: ${CI_COMMIT_TAG}
+    SLACK_MESSAGE: >-
+      {
+        "text": "Release ${CI_COMMIT_TAG} is ready for use on ${CI_ENVIRONMENT_URL}"
+      }
+    QA_REF: master
+  environment:
+    name: staging
+    url: https://api.jobadvisor.staging.by/
+  only:
+    - tags
+
+deploy:production:
+  <<: *deploy_definition
+  stage: deploy
+  variables:
+    HELM_ENV: prod
+    HOSTNAME: api-prod.jobadvisor.staging.by
+    IMAGE_TAG: ${CI_COMMIT_TAG}
+    SLACK_MESSAGE: >-
+      {
+        "text": "Release ${CI_COMMIT_TAG} is ready for use on production ${CI_ENVIRONMENT_URL}"
+      }
+    QA_REF: master
+  after_script: []
+  environment:
+    name: production
+    url: https://api-prod.jobadvisor.staging.by/
+  only:
+    - tags

@@ -1,0 +1,23 @@
+Page:
+  title: Page
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    title:
+      type: string
+      example: "Politique de confidentialité"
+    slug:
+      type: string
+      example: "privacy_policy"
+    text:
+      type: string
+      format: html
+      example: "<h1>Sania</h1>"
+  required:
+    - id
+    - title
+    - slug
+    - text

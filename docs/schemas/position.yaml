@@ -1,0 +1,13 @@
+Position:
+  title: Position
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 88
+      readOnly: true
+    name:
+      type: string
+      example: "Developer"
+  required:
+    - name

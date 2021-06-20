@@ -1,0 +1,12 @@
+{% extends "emails/base_email.html" %}
+{% block title %}
+    Contact US
+{% endblock %}
+{% block body %}
+    <h3>Name: {{ name }}</h3>
+    <h3>Phone: {{ phone }}</h3>
+    <h3>Email: {{ email }}</h3>
+    <p>
+        {{ message }}
+    </p>
+{% endblock %}

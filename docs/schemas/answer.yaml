@@ -1,0 +1,31 @@
+Answer:
+  title: Answer
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    text:
+      type: string
+      example: "Some text"
+    variant:
+      type: array
+      items:
+        type: integer
+      example: [5, 32]
+    question:
+      type: integer
+      example: 46
+    owner:
+      type: integer
+      example: 47
+    company:
+      type: integer
+      example: 48
+  required:
+    - variant
+    - question
+    - owner
+    - company
+    - text

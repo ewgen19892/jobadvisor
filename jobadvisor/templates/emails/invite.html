@@ -1,0 +1,15 @@
+{% extends "emails/base_email.html" %}
+{% block body %}
+    <p style="font-family: 'Arial', sans-serif;font-style: normal;font-weight: normal;font-size: 18px;color: #222222;margin:0;padding: 0;margin-bottom: 24px;">
+        You are invited to the JobAdvisor
+    </p>
+    <a style="display: inline-block;font-family: 'Arial', sans-serif;font-style: normal;font-weight: bold;font-size: 18px;color: #1a0dab;margin:0;padding: 0;margin-bottom: 24px;" href="{{ SITE_URL }}/restore/?uid={{ uid }}&token={{ token }}&type=invite">
+        Accept invitation
+    </a>
+    <p style="font-family: 'Arial', sans-serif;font-style: normal;font-weight: normal;font-size: 18px;color: #222222;margin:0;padding: 0;margin-bottom: 24px;">
+        Why do I have to reset my password?
+        As a security best practice, JobAdvisor does not store your password. As
+        such, we cannot simply send you your old password. A unique link to
+        reset your password has been generated for you.
+    </p>
+{% endblock %}

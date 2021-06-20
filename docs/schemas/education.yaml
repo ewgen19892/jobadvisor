@@ -1,0 +1,29 @@
+Education:
+  title: Education
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 8459631
+      readOnly: true
+    graduated:
+      type: string
+      format: date
+      example: "2009-12-30"
+    speciality:
+      type: string
+      example: "Milking machine operator"
+    owner:
+      type: integer
+      example: 234
+      readOnly: true
+    institute:
+      description: "`Institute` for read and `integer` for write"
+      oneOf:
+        - $ref: "institute.yaml#/Institute"
+        - type: integer
+          example: 92
+  required:
+    - graduated
+    - speciality
+    - institute

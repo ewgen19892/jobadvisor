@@ -1,0 +1,33 @@
+FAQ:
+  title: FAQ
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    category:
+      type: integer
+      example: 45
+    level:
+      type: integer
+      description: >
+        Level descriptions:
+         * `0` - Trainee
+         * `1` - Employee
+         * `2` - Employer
+      enum:
+        - 0
+        - 1
+        - 2
+    question:
+      type: string
+      example: "Some question"
+    answer:
+      type: string
+      example: "Some answer"
+  required:
+    - category
+    - role
+    - question
+    - answer

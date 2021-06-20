@@ -1,0 +1,88 @@
+Review:
+  title: Review
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    company:
+      description: "`Company` for read and `integer` for write"
+      oneOf:
+        - $ref: "company.yaml#/Company"
+        - type: integer
+          example: 92
+    owner:
+      type: object
+      readOnly: true
+      allOf:
+        - $ref: "user.yaml#/User"
+    title:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+      maxLength: 120
+    description:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+    rate:
+      type: float
+      example: 8.2
+    improvements:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+      nullable: true
+    is_anonymous:
+      type: boolean
+      example: true
+    position:
+      description: "`Position` for read and `integer` for write"
+      oneOf:
+        - $ref: "position.yaml#/Position"
+        - type: integer
+          example: 72
+    started_at:
+      type: string
+      format: date
+    finished_at:
+      type: string
+      format: date
+      nullable: true
+    is_top:
+      type: boolean
+      example: false
+      readOnly: true
+    is_best:
+      type: boolean
+      example: false
+      readOnly: true
+    created_at:
+      type: string
+      format: datetime
+      example: "2019-04-25T10:34:19.614084Z"
+      readOnly: true
+    is_helpful:
+      type: object
+      properties:
+        to_me:
+          type: boolean
+          example: true
+        count:
+          type: integer
+          example: 59
+      readOnly: true
+    has_report:
+      type: boolean
+      example: false
+      readOnly: true
+    comments:
+      type: array
+      readOnly: true
+      items:
+        $ref: 'comment.yaml#/Comment'
+  required:
+    - company
+    - title
+    - description
+    - rate
+    - position
+    - started_at

@@ -1,0 +1,700 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-30 12:11+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: jobadvisor/authentication/backends/facebook.py:15
+msgid "Facebook exception"
+msgstr ""
+
+#: jobadvisor/authentication/backends/facebook.py:21
+#: jobadvisor/authentication/backends/google.py:22
+#: jobadvisor/authentication/backends/linkedin.py:31
+msgid "No required permissions"
+msgstr ""
+
+#: jobadvisor/authentication/backends/google.py:16
+msgid "Google exception"
+msgstr ""
+
+#: jobadvisor/authentication/backends/linkedin.py:18
+msgid "Linkedin exception"
+msgstr ""
+
+#: jobadvisor/authentication/backends/linkedin.py:25
+msgid "Bad authorization code"
+msgstr ""
+
+#: jobadvisor/companies/admin/company.py:36
+msgid "User already has company"
+msgstr ""
+
+#: jobadvisor/companies/admin/company.py:39
+#: jobadvisor/companies/serializers/company.py:105
+msgid "Only the employer can be the owner"
+msgstr ""
+
+#: jobadvisor/companies/admin/company.py:41
+#: jobadvisor/companies/serializers/company.py:108
+msgid "Owner should not have works"
+msgstr ""
+
+#: jobadvisor/companies/admin/company.py:74
+msgid "Owner info"
+msgstr ""
+
+#: jobadvisor/companies/admin/company.py:82
+msgid "Company Info"
+msgstr ""
+
+#: jobadvisor/companies/admin/company.py:91
+msgid "Company parameters"
+msgstr ""
+
+#: jobadvisor/companies/admin/company.py:98
+#: jobadvisor/companies/models/company.py:40
+msgid "Workers"
+msgstr ""
+
+#: jobadvisor/companies/exceptions.py:11
+msgid "You are not an employee of the company"
+msgstr ""
+
+#: jobadvisor/companies/exceptions.py:17
+msgid "The company does not have the active subscription"
+msgstr ""
+
+#: jobadvisor/companies/exceptions.py:23
+msgid "The company does not have the required subscription"
+msgstr ""
+
+#: jobadvisor/companies/exceptions.py:31
+msgid "Limit of top vacancy exceeded"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:22
+#: jobadvisor/companies/models/follow.py:10
+#: jobadvisor/polls/models/answer.py:17 jobadvisor/reviews/models/comment.py:18
+#: jobadvisor/reviews/models/interview.py:32
+#: jobadvisor/reviews/models/report.py:26
+#: jobadvisor/reviews/models/review.py:24 jobadvisor/users/models/job.py:17
+msgid "Owner"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:29
+#: jobadvisor/companies/models/industry.py:9
+#: jobadvisor/companies/models/position.py:9
+#: jobadvisor/landing/models/advantage.py:14
+#: jobadvisor/landing/models/faq.py:12 jobadvisor/polls/models/category.py:10
+#: jobadvisor/users/models/skill.py:10
+msgid "Name"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:34
+#: jobadvisor/companies/models/industry.py:15
+#: jobadvisor/companies/models/industry.py:16
+msgid "Industry"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:45
+msgid "Logotype"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:50
+msgid "Website"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:54
+msgid "Size"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:58
+msgid "Founded date"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:62
+#: jobadvisor/companies/models/follow.py:22
+#: jobadvisor/companies/models/vacancy.py:29
+#: jobadvisor/reviews/models/interview.py:47
+#: jobadvisor/reviews/models/review.py:34
+msgid "Description"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:66
+msgid "Is validated"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:70
+#: jobadvisor/users/models/user.py:120
+msgid "Is banned"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:74
+#: jobadvisor/companies/models/vacancy.py:59
+msgid "Deleted at"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:78
+msgid "followers"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:88
+#: jobadvisor/companies/models/follow.py:16
+#: jobadvisor/companies/models/subscription.py:36
+#: jobadvisor/companies/models/vacancy.py:17
+#: jobadvisor/polls/models/answer.py:23
+#: jobadvisor/reviews/models/interview.py:26
+#: jobadvisor/reviews/models/review.py:18 jobadvisor/users/models/job.py:22
+msgid "Company"
+msgstr ""
+
+#: jobadvisor/companies/models/company.py:89
+msgid "Companies"
+msgstr ""
+
+#: jobadvisor/companies/models/follow.py:30
+msgid "Favorite"
+msgstr ""
+
+#: jobadvisor/companies/models/follow.py:31
+msgid "Favorites"
+msgstr ""
+
+#: jobadvisor/companies/models/position.py:15
+#: jobadvisor/companies/models/vacancy.py:23
+#: jobadvisor/reviews/models/interview.py:37 jobadvisor/users/models/job.py:28
+#: jobadvisor/users/models/resume.py:16
+msgid "Position"
+msgstr ""
+
+#: jobadvisor/companies/models/position.py:16
+msgid "Positions"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:31
+msgid "First"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:32
+msgid "Second"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:33
+msgid "Third"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:40
+msgid "Plan"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:41
+msgid "Started at"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:43
+msgid "Finished at"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:51
+msgid "Subscription"
+msgstr ""
+
+#: jobadvisor/companies/models/subscription.py:52
+msgid "Subscriptions"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:12 jobadvisor/users/models/job.py:12
+#: jobadvisor/users/models/user.py:85
+msgid "Trainee"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:13 jobadvisor/users/models/job.py:13
+#: jobadvisor/users/models/user.py:86
+msgid "Employee"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:32 jobadvisor/users/models/job.py:39
+msgid "Salary"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:35
+#: jobadvisor/users/models/resume.py:23
+msgid "Experience in years"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:38
+msgid "Location"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:42
+msgid "Candidate level"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:47
+msgid "Participates in the top"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:55
+msgid "Is hiring"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:63
+#: jobadvisor/reviews/models/interview.py:87
+#: jobadvisor/reviews/models/review.py:56
+msgid "Created at"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:71
+msgid "Vacancy"
+msgstr ""
+
+#: jobadvisor/companies/models/vacancy.py:72
+msgid "Vacancies"
+msgstr ""
+
+#: jobadvisor/companies/permissions.py:15
+msgid "The company must have a first subscription"
+msgstr ""
+
+#: jobadvisor/companies/permissions.py:36
+#: jobadvisor/companies/permissions.py:116
+msgid "The company must have a third subscription"
+msgstr ""
+
+#: jobadvisor/companies/permissions.py:56
+#: jobadvisor/companies/permissions.py:76
+msgid "The company must have a second subscription"
+msgstr ""
+
+#: jobadvisor/companies/permissions.py:96
+msgid "User must have a resume"
+msgstr ""
+
+#: jobadvisor/companies/serializers/company.py:102
+msgid "You can't change the owner"
+msgstr ""
+
+#: jobadvisor/companies/serializers/company.py:126
+msgid "User must be an employer to become an worker"
+msgstr ""
+
+#: jobadvisor/companies/serializers/company.py:129
+msgid "User should not have companies"
+msgstr ""
+
+#: jobadvisor/companies/serializers/company.py:132
+msgid "User should not have works"
+msgstr ""
+
+#: jobadvisor/companies/signals/companies.py:40
+msgid ""
+"Your subscription succesfully activated! You can check your subscription "
+"state in “My activities” section"
+msgstr ""
+
+#: jobadvisor/companies/signals/follows.py:19
+#, python-format
+msgid "%(user_name) is interested in your company"
+msgstr ""
+
+#: jobadvisor/companies/signals/vacancies.py:26
+msgid "%(user_name) applies for your job “%(vacancy_position)”"
+msgstr ""
+
+#: jobadvisor/companies/tasks.py:21
+msgid "Attention! Your subscription is over in 7 day (%(exp_date))"
+msgstr ""
+
+#: jobadvisor/landing/models/advantage.py:19
+#: jobadvisor/users/models/resume.py:12
+msgid "File"
+msgstr ""
+
+#: jobadvisor/landing/models/advantage.py:23
+msgid "User level"
+msgstr ""
+
+#: jobadvisor/landing/models/advantage.py:28
+#: jobadvisor/polls/models/variant.py:19
+msgid "Weight"
+msgstr ""
+
+#: jobadvisor/landing/models/advantage.py:36
+msgid "Advantage"
+msgstr ""
+
+#: jobadvisor/landing/models/advantage.py:37
+msgid "Advantages"
+msgstr ""
+
+#: jobadvisor/landing/models/faq.py:21 jobadvisor/landing/models/faq.py:38
+#: jobadvisor/polls/models/category.py:19
+#: jobadvisor/polls/models/question.py:12
+msgid "Category"
+msgstr ""
+
+#: jobadvisor/landing/models/faq.py:22 jobadvisor/polls/models/category.py:20
+msgid "Categories"
+msgstr ""
+
+#: jobadvisor/landing/models/faq.py:44 jobadvisor/users/models/job.py:34
+#: jobadvisor/users/models/user.py:115
+msgid "Level"
+msgstr ""
+
+#: jobadvisor/landing/models/faq.py:45
+msgid "Select level"
+msgstr ""
+
+#: jobadvisor/landing/models/faq.py:48 jobadvisor/polls/models/answer.py:11
+#: jobadvisor/polls/models/question.py:22 jobadvisor/polls/models/variant.py:11
+#: jobadvisor/reviews/models/qa.py:20
+msgid "Question"
+msgstr ""
+
+#: jobadvisor/landing/models/faq.py:49 jobadvisor/polls/models/answer.py:37
+#: jobadvisor/reviews/models/qa.py:21
+msgid "Answer"
+msgstr ""
+
+#: jobadvisor/landing/models/faq.py:55 jobadvisor/landing/models/faq.py:56
+msgid "FAQ"
+msgstr ""
+
+#: jobadvisor/polls/admin/variant.py:26
+#: jobadvisor/polls/serializers/answer.py:27
+msgid "You can't choose a few positive variants"
+msgstr ""
+
+#: jobadvisor/polls/admin/variant.py:30
+msgid "There must be at least one positive option"
+msgstr ""
+
+#: jobadvisor/polls/admin/variant.py:35
+msgid "There must be at least one negative option"
+msgstr ""
+
+#: jobadvisor/polls/models/answer.py:29 jobadvisor/polls/models/variant.py:26
+msgid "Variant"
+msgstr ""
+
+#: jobadvisor/polls/models/answer.py:38
+msgid "Answers"
+msgstr ""
+
+#: jobadvisor/polls/models/question.py:9 jobadvisor/polls/models/variant.py:20
+#: jobadvisor/reviews/models/comment.py:22
+#: jobadvisor/reviews/models/report.py:29
+msgid "Text"
+msgstr ""
+
+#: jobadvisor/polls/models/question.py:23
+msgid "Questions"
+msgstr ""
+
+#: jobadvisor/polls/models/variant.py:16
+msgid "Is positive"
+msgstr ""
+
+#: jobadvisor/polls/models/variant.py:27
+msgid "Variants"
+msgstr ""
+
+#: jobadvisor/polls/serializers/answer.py:32
+msgid "You can't choose a positive and negative variant"
+msgstr ""
+
+#: jobadvisor/reviews/exceptions.py:13
+msgid "Limit of favorite reviews exceeded"
+msgstr ""
+
+#: jobadvisor/reviews/exceptions.py:21
+msgid "Limit of favorite interviews exceeded"
+msgstr ""
+
+#: jobadvisor/reviews/models/comment.py:15
+msgid "Comment"
+msgstr ""
+
+#: jobadvisor/reviews/models/comment.py:16
+#: jobadvisor/reviews/models/review.py:60
+msgid "Comments"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:14 jobadvisor/reviews/models/qa.py:16
+msgid "Interview"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:15
+msgid "Interviews"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:21
+msgid "Positive"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:22
+msgid "No opinion"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:23
+msgid "Negative"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:43
+#: jobadvisor/reviews/models/review.py:30
+msgid "Title"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:50
+msgid "Experience"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:55
+msgid "Complication"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:57
+msgid "Has offer"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:61
+msgid "duration"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:62
+msgid "In minutes"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:66
+msgid "Date"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:70
+msgid "Place"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:75
+#: jobadvisor/reviews/models/review.py:44
+msgid "Helpful for this users"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:79
+#: jobadvisor/reviews/models/review.py:48
+msgid "Is anonymous"
+msgstr ""
+
+#: jobadvisor/reviews/models/interview.py:83
+#: jobadvisor/reviews/models/review.py:52
+msgid "Is TOP"
+msgstr ""
+
+#: jobadvisor/reviews/models/qa.py:13
+msgid "Question & answer"
+msgstr ""
+
+#: jobadvisor/reviews/models/qa.py:14
+msgid "Questions & answers"
+msgstr ""
+
+#: jobadvisor/reviews/models/report.py:15
+msgid "Report"
+msgstr ""
+
+#: jobadvisor/reviews/models/report.py:16
+msgid "Reports"
+msgstr ""
+
+#: jobadvisor/reviews/models/report.py:22
+msgid "Open"
+msgstr ""
+
+#: jobadvisor/reviews/models/report.py:23
+msgid "In progress"
+msgstr ""
+
+#: jobadvisor/reviews/models/report.py:24
+msgid "Closed"
+msgstr ""
+
+#: jobadvisor/reviews/models/report.py:30
+msgid "Status"
+msgstr ""
+
+#: jobadvisor/reviews/models/review.py:14
+msgid "Review"
+msgstr ""
+
+#: jobadvisor/reviews/models/review.py:15
+msgid "Reviews"
+msgstr ""
+
+#: jobadvisor/reviews/models/review.py:37
+msgid "Rate"
+msgstr ""
+
+#: jobadvisor/reviews/models/review.py:40
+msgid "Improvements"
+msgstr ""
+
+#: jobadvisor/reviews/signals.py:19 jobadvisor/reviews/signals.py:39
+msgid "Anonymous Author"
+msgstr ""
+
+#: jobadvisor/reviews/signals.py:22
+msgid "%(user_name) published new review of your company"
+msgstr "%(user_name) asdasd"
+
+#: jobadvisor/reviews/signals.py:42
+msgid "%(user_name) published new interview of your company"
+msgstr ""
+
+#: jobadvisor/reviews/signals.py:61
+msgid "%(company_name)s answered on your %(content_type)s"
+msgstr "%(company_name)s répond à votre %(content_type)s"
+
+#: jobadvisor/settings.py:131
+msgid "French"
+msgstr ""
+
+#: jobadvisor/settings.py:132
+msgid "English"
+msgstr ""
+
+#: jobadvisor/settings.py:252
+msgid "FCM JobAdvisor"
+msgstr ""
+
+#: jobadvisor/users/admin/user.py:26
+msgid "Personal info"
+msgstr ""
+
+#: jobadvisor/users/admin/user.py:36
+msgid "Permissions"
+msgstr "Les permissions"
+
+#: jobadvisor/users/admin/user.py:38
+msgid "Important dates"
+msgstr ""
+
+#: jobadvisor/users/admin/user.py:71
+msgid "Last salary"
+msgstr ""
+
+#: jobadvisor/users/admin/user.py:83
+msgid "Last job level"
+msgstr ""
+
+#: jobadvisor/users/models/education.py:10
+msgid "Graduated"
+msgstr ""
+
+#: jobadvisor/users/models/education.py:13
+msgid "Speciality"
+msgstr ""
+
+#: jobadvisor/users/models/education.py:18 jobadvisor/users/models/resume.py:37
+msgid "User"
+msgstr ""
+
+#: jobadvisor/users/models/education.py:24
+#: jobadvisor/users/models/institute.py:19
+msgid "Institute"
+msgstr ""
+
+#: jobadvisor/users/models/education.py:33
+msgid "Education"
+msgstr ""
+
+#: jobadvisor/users/models/education.py:34
+msgid "Educations"
+msgstr ""
+
+#: jobadvisor/users/models/institute.py:10
+msgid "Institute name"
+msgstr ""
+
+#: jobadvisor/users/models/institute.py:20
+msgid "Institutes"
+msgstr ""
+
+#: jobadvisor/users/models/job.py:42
+msgid "Started working at"
+msgstr ""
+
+#: jobadvisor/users/models/job.py:45
+msgid "Finished working at"
+msgstr ""
+
+#: jobadvisor/users/models/job.py:53
+msgid "Job"
+msgstr ""
+
+#: jobadvisor/users/models/job.py:54
+msgid "Jobs"
+msgstr ""
+
+#: jobadvisor/users/models/resume.py:26
+msgid "Certificates"
+msgstr ""
+
+#: jobadvisor/users/models/resume.py:43 jobadvisor/users/models/skill.py:20
+msgid "Skills"
+msgstr ""
+
+#: jobadvisor/users/models/resume.py:52
+msgid "Resume"
+msgstr ""
+
+#: jobadvisor/users/models/resume.py:53
+msgid "Resumes"
+msgstr ""
+
+#: jobadvisor/users/models/skill.py:19
+msgid "Skill"
+msgstr ""
+
+#: jobadvisor/users/models/user.py:87
+msgid "Employer"
+msgstr ""
+
+#: jobadvisor/users/models/user.py:91
+msgid "Email address"
+msgstr ""
+
+#: jobadvisor/users/models/user.py:95
+msgid "First name"
+msgstr ""
+
+#: jobadvisor/users/models/user.py:100
+msgid "Last name"
+msgstr ""
+
+#: jobadvisor/users/models/user.py:105
+msgid "Phone number"
+msgstr ""
+
+#: jobadvisor/users/models/user.py:124
+msgid "Active"
+msgstr ""
+
+#: jobadvisor/users/models/user.py:127
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""

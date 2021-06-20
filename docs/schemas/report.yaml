@@ -1,0 +1,17 @@
+Report:
+  title: Report
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    owner:
+      type: integer
+      example: 234
+      readOnly: true
+    text:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+  required:
+    - text

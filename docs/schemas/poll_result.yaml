@@ -1,0 +1,15 @@
+PollResult:
+  title: Poll Result
+  type: object
+  properties:
+    category:
+      type: object
+      readOnly: true
+      $ref: 'category.yaml#/Category'
+    result:
+      type: float
+      example: 8.8
+      readOnly: true
+  required:
+    - category
+    - result

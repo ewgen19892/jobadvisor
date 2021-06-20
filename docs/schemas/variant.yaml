@@ -1,0 +1,24 @@
+Variant:
+  title: Variant
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    text:
+      type: string
+      example: "Some text"
+    question:
+      type: integer
+      example: 45
+    is_positive:
+      type: boolean
+      example: false
+    weight:
+      type: float
+      example: 1.2
+  required:
+    - question
+    - weight
+    - text

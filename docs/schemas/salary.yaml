@@ -1,0 +1,21 @@
+Salary:
+  title: Salary
+  type: object
+  properties:
+    position:
+      type: string
+      example: "Backend developer"
+    max:
+      type: float
+      example: 222.1
+    min:
+      type: float
+      example: 15.9
+    avg:
+      type: float
+      example: 15.2
+    count:
+      type: integer
+      example: 9
+  required:
+    - text

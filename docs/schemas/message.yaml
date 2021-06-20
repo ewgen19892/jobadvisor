@@ -1,0 +1,31 @@
+Message:
+  title: Message
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    owner:
+      type: integer
+      example: 456
+      readOnly: true
+    text:
+      type: string
+      example: "Some text"
+    level:
+      type: string
+      enum:
+        - warning
+        - info
+        - message
+        - success
+        - alarm
+    is_read:
+      type: boolean
+      example: true
+  required:
+    - id
+    - name
+    - file
+    - level

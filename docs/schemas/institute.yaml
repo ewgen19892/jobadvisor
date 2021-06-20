@@ -1,0 +1,13 @@
+Institute:
+  title: Institute
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 45
+      readOnly: true
+    name:
+      type: string
+      example: "MIT"
+  required:
+    - name

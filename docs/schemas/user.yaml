@@ -1,0 +1,74 @@
+User:
+  title: User
+  type: object
+  properties:
+    id:
+      readOnly: true
+      type: integer
+      example: 465
+    email:
+      type: string
+      format: email
+      example: "volodia@mail.com"
+    password:
+      type: string
+      format: password
+      writeOnly: true
+      example: "samyj_umnyj"
+    first_name:
+      type: string
+      example: "Volodia"
+      nullable: true
+    last_name:
+      type: string
+      example: "Mozhenkov"
+      nullable: true
+    phone:
+      type: string
+      example: "375291891488"
+      nullable: true
+    photo:
+      type: string
+      format: binary
+      nullable: true
+      example: null
+    level:
+      type: integer
+      description: >
+        Level descriptions:
+         * `0` - Trainee
+         * `1` - Employee
+         * `2` - Employer
+      enum:
+        - 0
+        - 1
+        - 2
+    is_banned:
+      type: boolean
+      example: false
+      readOnly: true
+    is_trial:
+      type: boolean
+      example: false
+      readOnly: true
+    profile_completion:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+        - 0
+      readOnly: true
+    works_in:
+      readOnly: true
+      type: integer
+      example: 465
+      nullable: true
+    company:
+      readOnly: true
+      type: integer
+      example: 457
+      nullable: true
+  required:
+    - email
+    - password

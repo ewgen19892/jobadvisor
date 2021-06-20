@@ -1,0 +1,17 @@
+Question:
+  title: Question
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    text:
+      type: string
+      example: "Some text"
+    category:
+      type: integer
+      example: 45
+  required:
+    - category
+    - text

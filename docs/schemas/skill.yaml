@@ -1,0 +1,13 @@
+Skill:
+  title: Skill
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 45
+      readOnly: true
+    name:
+      type: string
+      example: "Python"
+  required:
+    - name

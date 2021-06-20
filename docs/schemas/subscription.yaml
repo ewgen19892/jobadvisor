@@ -1,0 +1,35 @@
+Subscription:
+  title: Subsription
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    company:
+      type: integer
+      example: 45
+      readOnly: true
+    plan:
+      readOnly: true
+      enum:
+        - 1
+        - 2
+        - 3
+    is_trial:
+      type: boolean
+      example: true
+    started_at:
+      readOnly: true
+      format: datetime
+      example: "2019-04-25T10:34:19.614084Z"
+    finished_at:
+      readOnly: true
+      format: datetime
+      example: "2019-04-25T10:34:19.614084Z"
+  required:
+    - id
+    - company
+    - plan
+    - started_at
+    - finished_at

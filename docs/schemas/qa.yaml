@@ -1,0 +1,19 @@
+QA:
+  title: QA
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    interview:
+      type: integer
+      example: 45
+    question:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+    answer:
+      type: string
+      example: "Lorem ipsum, or lipsum as it is sometimes known"
+  required:
+    - text

@@ -1,0 +1,22 @@
+environment: "develop"
+siteUrl: https://front-dev.jobadvisor.staging.by
+debug: "false"
+command: dev
+allowedHosts:
+  - "*"
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/acme-challenge-type: http01
+  hosts:
+    - host: api-dev.jobadvisor.staging.by
+      paths: [/]
+  tls:
+    - secretName: dev-api-jobadvisor-tls
+      hosts:
+        - api-dev.jobadvisor.staging.by
+
+postgresql:
+  persistence:
+    enabled: false

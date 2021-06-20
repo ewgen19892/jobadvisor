@@ -1,0 +1,13 @@
+Category:
+  title: Category
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    name:
+      type: string
+      example: "Category name"
+  required:
+    - name

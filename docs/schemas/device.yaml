@@ -1,0 +1,42 @@
+Device:
+  title: Device
+  type: object
+  properties:
+    id:
+      type: integer
+      example: 456
+      readOnly: true
+    name:
+      type: string
+      example: "Firefox 56"
+      maxLength: 255
+      nullable: true
+    active:
+      type: boolean
+      example: true
+    date_created:
+      readOnly: true
+      format: datetime
+      example: "2019-04-25T10:34:19.614084Z"
+    device_id:
+      type: string
+      example: "cqDvP3kdEclZy"
+      maxLength: 150
+      nullable: true
+    registration_id:
+      type: string
+      example: "375cqDvP3kdEclZy29cqDvP3kdEclZy18cqDvP3kdEclZy81cqDvP3kdEclZy489cqDvP3kdEclZy"
+    type:
+      type: string
+      description: >
+        Level descriptions:
+         * `ios` - iOS
+         * `android` - Android
+         * `web` - Web push
+      enum:
+        - ios
+        - android
+        - web
+  required:
+    - registration_id
+    - type
